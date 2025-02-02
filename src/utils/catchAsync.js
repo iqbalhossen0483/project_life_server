@@ -1,4 +1,4 @@
-const config = require("./config");
+const config = require("../config/config");
 
 const catchAsync = (fn) => (req, res, next) => {
   Promise.resolve(fn(req, res, next)).catch((error) => {

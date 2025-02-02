@@ -6,8 +6,8 @@ const validationMiddleware = (schema) => {
       const firstError = error.details[0];
 
       res.status(400).json({
-        message: 'Validation failed',
-        error: firstError.message
+        message: "Validation failed",
+        error: firstError.message,
       });
     } else {
       next();
@@ -15,4 +15,4 @@ const validationMiddleware = (schema) => {
   };
 };
 
-export default validationMiddleware;
+module.exports = validationMiddleware;
