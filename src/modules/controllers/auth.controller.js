@@ -1,12 +1,8 @@
 const bcrypt = require("bcrypt");
-const { OAuth2Client } = require("google-auth-library");
 const catchAsync = require("../../utils/catchAsync");
 const userModel = require("../models/user.model");
 const { setAuthCookie, sendOtp } = require("../services/auth.service");
 const OtpModel = require("../models/otp.model");
-const config = require("../../config/config");
-
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // login user
 const login = catchAsync(async (req, res) => {
@@ -198,45 +194,6 @@ const resetPassword = catchAsync(async (req, res) => {
   });
 });
 
-const googleLogin = catchAsync(async (req, res) => {
-  const { token } = req.body;
-
-  // Verify the token
-  const ticket = await client.verifyIdToken({
-    idToken: token,
-    audience: config.googleClientId,
-  });
-
-  const payload = ticket.getPayload();
-
-  let userPayload;
-
-  const user = await userModel
-    .findOne({ email: payload.email })
-    .select("-password");
-
-  if (!user) {
-    const userData = {
-      email: payload.email,
-      name: payload.name,
-      emailVerified: payload.email_verified,
-      role: "user",
-      auth_type: "google",
-    };
-    userPayload = await userModel.create(userData);
-  } else {
-    userPayload = user;
-  }
-
-  const jwtToken = setAuthCookie(res, userPayload);
-
-  res.send({
-    success: true,
-    user: userPayload,
-    token: jwtToken,
-  });
-});
-
 module.exports = {
   login,
   register,
@@ -246,5 +203,4 @@ module.exports = {
   sendVefifyEmail,
   varifyOtp,
   resetPassword,
-  googleLogin,
 };

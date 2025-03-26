@@ -1,7 +1,7 @@
 const config = {
   env: process.env.NODE_ENV || "development",
   apiPrefix: process.env.API_PREFIX,
-  port: process.env.PORT || 8080,
+  port: process.env.PORT || 5000,
   mongoUri: process.env.MONGODB_URL,
   jwtSecret: process.env.JWT_SECRET,
   saltRounds: process.env.SALT_ROUNDS,

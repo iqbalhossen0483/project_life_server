@@ -13,7 +13,7 @@ const sendEmail = async (options) => {
   });
 
   const mailOptions = {
-    from: `Dropshopping <${config.smptUser}>`,
+    from: "Project Life",
     to: options.email,
     subject: options.subject,
     html: genarateHtml(options.name, options.otp, options.type),

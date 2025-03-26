@@ -12,11 +12,6 @@ const loginSchema = joi.object({
   password: joi.string().min(6).required(),
 });
 
-const googleLoginSchema = joi.object({
-  token: joi.string().required(),
-  auth_type: joi.string().valid("google").default("google"),
-});
-
 const logoutSchema = joi.object({});
 
 const verifyEmailSchema = joi.object({
@@ -52,14 +47,6 @@ const registerValidator = (req, res, next) => {
 
 const loginValidator = (req, res, next) => {
   const { error } = loginSchema.validate(req.body);
-  if (error) {
-    throw { message: error.details[0].message, status: 400 };
-  }
-  next();
-};
-
-const googleLoginValidator = (req, res, next) => {
-  const { error } = googleLoginSchema.validate(req.body);
   if (error) {
     throw { message: error.details[0].message, status: 400 };
   }
@@ -109,7 +96,6 @@ const updateProfileValidator = (req, res, next) => {
 module.exports = {
   registerValidator,
   loginValidator,
-  googleLoginValidator,
   logoutValidator,
   verifyEmailValidator,
   otpValidator,

@@ -8,7 +8,6 @@ const {
   varifyOtp,
   sendVefifyEmail,
   resetPassword,
-  googleLogin,
   updateProfile,
 } = require("../modules/controllers/auth.controller");
 const {
@@ -16,7 +15,6 @@ const {
   loginValidator,
   logoutValidator,
   otpValidator,
-  googleLoginValidator,
   verifyEmailValidator,
   resetPasswordValidator,
   updateProfileValidator,
@@ -27,7 +25,6 @@ const isAuthenticated = require("../utils/isAuthenticate");
 router.post("/register", registerValidator, register);
 router.post("/login", loginValidator, login);
 router.patch("/logout", isAuthenticated, logoutValidator, logout);
-router.post("/google-login", googleLoginValidator, googleLogin);
 
 //get profile
 router.get("/me", isAuthenticated, profile);

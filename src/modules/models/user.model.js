@@ -21,7 +21,7 @@ const schema = mongoose.Schema(
       type: String,
       required: false,
       default: "email",
-      enum: ["email", "google", "facebook"],
+      enum: ["email", "number"],
     },
     about: String,
     location: String,
