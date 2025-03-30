@@ -10,6 +10,10 @@ const schema = mongoose.Schema(
       type: String,
       required: true,
     },
+    hospital_name: {
+      type: String,
+      required: true,
+    },
     email: {
       type: String,
       required: true,
@@ -19,6 +23,17 @@ const schema = mongoose.Schema(
       type: String,
       required: false,
     },
+    dob: String,
+    sex: {
+      type: String,
+      enum: ["male", "female"],
+    },
+    profession: {
+      type: String,
+      enum: ["doctor", "nurse"],
+    },
+    city: String,
+    address: String,
     mobile: String,
     image: String,
     auth_type: {
