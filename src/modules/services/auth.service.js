@@ -5,17 +5,10 @@ const bcrypt = require("bcrypt");
 const sendEmail = require("../../utils/sendEmail");
 const OtpModel = require("../models/otp.model");
 
-const setAuthCookie = (res, user) => {
+const generateToken = (res, user) => {
   const token = jwt.sign({ user }, config.jwtSecret, {
     expiresIn: config.jwtExpiration,
   });
-
-  res.cookie("auth", token, {
-    httpOnly: true,
-    secure: config.env === "production",
-    maxAge: config.cookieExiration,
-  });
-
   return token;
 };
 
@@ -47,4 +40,4 @@ const sendOtp = async (user, type) => {
   });
 };
 
-module.exports = { setAuthCookie, sendOtp };
+module.exports = { generateToken, sendOtp };

@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 
 const schema = mongoose.Schema(
   {
-    name: {
+    first_name: {
+      type: String,
+      required: true,
+    },
+    last_name: {
       type: String,
       required: true,
     },
@@ -21,18 +25,18 @@ const schema = mongoose.Schema(
       type: String,
       required: false,
       default: "email",
-      enum: ["email", "number"],
+      enum: ["email", "mobile"],
     },
     about: String,
     location: String,
     role: {
       type: String,
-      enum: ["user", "moderator", "admin", "superadmin"],
+      enum: ["user", "moderator", "admin"],
       default: "user",
     },
     status: {
       type: String,
-      enum: ["active", "blocked"],
+      enum: ["active", "inactive"],
       default: "active",
     },
     emailVerified: {

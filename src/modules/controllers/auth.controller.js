@@ -1,14 +1,13 @@
 const bcrypt = require("bcrypt");
 const catchAsync = require("../../utils/catchAsync");
 const userModel = require("../models/user.model");
-const { setAuthCookie, sendOtp } = require("../services/auth.service");
+const { generateToken, sendOtp } = require("../services/auth.service");
 const OtpModel = require("../models/otp.model");
 
 // login user
 const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
   const existUser = await userModel.findOne({ email: email });
-
   if (!existUser) {
     throw { status: 401, message: "authentication failed" };
   }
@@ -22,7 +21,7 @@ const login = catchAsync(async (req, res) => {
   const user = existUser.toObject();
   delete user.password;
 
-  const token = setAuthCookie(res, user);
+  const token = generateToken(res, user);
 
   // return response
   res.send({
@@ -55,7 +54,7 @@ const register = catchAsync(async (req, res) => {
 
   await sendOtp(data, "verify");
 
-  const token = setAuthCookie(res, user);
+  const token = generateToken(res, user);
 
   res.send({
     success: true,
@@ -123,7 +122,7 @@ const sendVefifyEmail = catchAsync(async (req, res) => {
   }
   await sendOtp(user, type === "verify" ? "verify" : "reset");
 
-  const token = setAuthCookie(res, user);
+  const token = generateToken(res, user);
 
   res.send({ success: true, token, message: "OTP sent to your email" });
 });
@@ -161,7 +160,7 @@ const varifyOtp = catchAsync(async (req, res) => {
     })
     .select("-password");
 
-  const token = setAuthCookie(res, user);
+  const token = generateToken(res, user);
 
   res.send({
     success: true,

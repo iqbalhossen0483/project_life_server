@@ -8,6 +8,7 @@ const config = require("./config/config");
 const authLimiter = require("./config/authlimiter.config");
 const routes = require("./routes");
 const { redis, queue } = require("./config/redis.config");
+const path = require("path");
 
 // initialize the app
 const app = express();
@@ -44,12 +45,13 @@ if (node_env === "production") {
 }
 
 // access the public folders
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 // initialize hello text
 app.get("/", (req, res) => {
   res.send("Hey Developer 🔥");
 });
+``;
 
 // Custom middleware for logging
 app.use((req, res, next) => {
